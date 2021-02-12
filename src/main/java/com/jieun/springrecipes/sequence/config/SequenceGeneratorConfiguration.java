@@ -1,20 +1,26 @@
 package com.jieun.springrecipes.sequence.config;
 
-import com.jieun.springrecipes.sequence.SequenceGenerator;
-import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.FilterType;
 
 @Configuration
-public class SequenceGeneratorConfiguration {
+@ComponentScan(
+        includeFilters = {
+                @ComponentScan.Filter(
+                        type = FilterType.REGEX,
+                        pattern = {"com.jieun.springrecipes.sequence.*Dao",
+                        "com.jieun.springrecipes.sequence.*Service"}
+                )
+        },
+        excludeFilters = {
+                @ComponentScan.Filter(
+                        type = FilterType.ANNOTATION,
+                        classes = {org.springframework.stereotype.Controller.class}
+                )
+        }
 
-    @Bean
-    public SequenceGenerator sequenceGenerator(){
-        SequenceGenerator seqgen = new SequenceGenerator();
-        seqgen.setPrefix("30");
-        seqgen.setSuffix("A");
-        seqgen.setInitial(10000);
-        return seqgen;
-    }
-
+)
+public class SequenceGeneratorConfiguration{
 
 }

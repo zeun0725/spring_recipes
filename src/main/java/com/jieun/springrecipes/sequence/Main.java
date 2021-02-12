@@ -1,6 +1,5 @@
 package com.jieun.springrecipes.sequence;
 
-import com.jieun.springrecipes.sequence.config.SequenceGeneratorConfiguration;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
@@ -9,11 +8,11 @@ public class Main {
     public static void main(String[] args) {
 
         ApplicationContext context =
-                new AnnotationConfigApplicationContext(SequenceGeneratorConfiguration.class);
+                new AnnotationConfigApplicationContext("com.jieun.springrecipes.sequence");
 
-        SequenceGenerator generator = context.getBean(SequenceGenerator.class);
+        SequenceDao generator = context.getBean(SequenceDao.class);
 
-        System.out.println(generator.getSequence());
-        System.out.println(generator.getSequence());
+        System.out.println(generator.getNextValue("IT"));
+        System.out.println(generator.getNextValue("IT"));
     }
 }
