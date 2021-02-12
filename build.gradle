@@ -1,18 +1,45 @@
+
+
 plugins {
     id 'groovy'
     id 'java'
     id 'war'
+    id 'eclipse'
+    id 'application'
 }
 
 group 'org.example'
 version '1.0-SNAPSHOT'
 
+mainClassName = "com.jieun.springrecipes.sequence.Main"
+
 repositories {
     mavenCentral()
 }
 
+jar {
+    manifest {
+        attributes "Implementation-Title": "${rootProject.name}",
+                "Main-Class": "${mainClassName}"
+    }
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+ext {
+    springVersion = '5.2.1.RELEASE'
+}
+
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+
 dependencies {
+    compile "org.springframework:spring-core:${springVersion}"
+    compile "org.springframework:spring-context:${springVersion}"
+    compile "org.slf4j:slf4j-simple:1.7.25"
+    implementation 'org.testng:testng:6.14.3'
     compile 'org.codehaus.groovy:groovy-all:2.3.11'
     testCompile group: 'junit', name: 'junit', version: '4.11'
-    testCompile group: 'junit', name: 'junit', version: '4.12'
+    compileOnly 'org.projectlombok:lombok:1.18.6'
+    annotationProcessor 'org.projectlombok:lombok:1.18.6'
 }
