@@ -10,9 +10,9 @@ public class Main {
         ApplicationContext context =
                 new AnnotationConfigApplicationContext("com.jieun.springrecipes.sequence");
 
-        SequenceDao generator = context.getBean(SequenceDao.class);
+        SequenceService sequenceService = context.getBean(SequenceService.class);
 
-        System.out.println(generator.getNextValue("IT"));
-        System.out.println(generator.getNextValue("IT"));
+        System.out.println(sequenceService.generate("IT"));
+        System.out.println(sequenceService.generate("IT"));
     }
 }

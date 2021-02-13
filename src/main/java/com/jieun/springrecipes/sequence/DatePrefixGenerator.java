@@ -1,10 +1,17 @@
 package com.jieun.springrecipes.sequence;
 
-public class DatePrefixGenerator {
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
-    private String pattern;
+public class DatePrefixGenerator implements PrefixGenerator {
+
+    private DateFormat formatter;
 
     public void setPattern(String pattern) {
-        this.pattern = pattern;
+        this.formatter = new SimpleDateFormat(pattern);
     }
+
+    @Override
+    public String getPrefix() { return formatter.format(new Date()); }
 }
