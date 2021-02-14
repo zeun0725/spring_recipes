@@ -1,6 +1,7 @@
 package com.jieun.springrecipes.sequence.config;
 
 import com.jieun.springrecipes.sequence.DatePrefixGenerator;
+import com.jieun.springrecipes.sequence.NumberPrefixGenerator;
 import com.jieun.springrecipes.sequence.SequenceGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -13,12 +14,15 @@ public class SequenceConfiguration {
         dpg.setPattern("yyyyMMdd");
         return dpg;
     }
+
+    @Bean
+    public NumberPrefixGenerator numberPrefixGenerator() { return new NumberPrefixGenerator();}
+
     @Bean
     public SequenceGenerator sequenceGenerator(){
         SequenceGenerator sequence = new SequenceGenerator();
         sequence.setInitial(10000);
         sequence.setSuffix("A");
-        sequence.setPrefixGenerator(datePrefixGenerator());
         return sequence;
     }
 }

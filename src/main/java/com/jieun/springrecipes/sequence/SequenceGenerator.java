@@ -1,9 +1,12 @@
 package com.jieun.springrecipes.sequence;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class SequenceGenerator {
-    private PrefixGenerator prefixGenerator;
+    @Autowired
+    private PrefixGenerator[] prefixGenerators;
     private int initial;
     private String suffix;
     private final AtomicInteger counter = new AtomicInteger();
@@ -11,8 +14,8 @@ public class SequenceGenerator {
     public SequenceGenerator() {
     }
 
-    public SequenceGenerator(PrefixGenerator prefixGenerator, int initial, String suffix) {
-        this.prefixGenerator = prefixGenerator;
+    public SequenceGenerator(PrefixGenerator[] prefixGenerators, int initial, String suffix) {
+        this.prefixGenerators = prefixGenerators;
         this.initial = initial;
         this.suffix = suffix;
     }
@@ -25,13 +28,18 @@ public class SequenceGenerator {
         this.suffix = suffix;
     }
 
-    public void setPrefixGenerator(PrefixGenerator prefixGenerator) {
-        this.prefixGenerator = prefixGenerator;
+    public void setPrefixGenerator(PrefixGenerator[] prefixGenerators) {
+        this.prefixGenerators = prefixGenerators;
     }
 
     public String getSequence() {
-        String builder = prefixGenerator.getPrefix() + initial + counter.getAndIncrement() + suffix;
-        return builder;
+        StringBuilder builder = new StringBuilder();
+        for (PrefixGenerator prefix : prefixGenerators)  {
+            builder.append(prefix.getPrefix());
+            builder.append("-");
+        }
+        builder.append(initial).append(counter.getAndIncrement()).append(suffix);
+        return builder.toString();
     }
 
 }
